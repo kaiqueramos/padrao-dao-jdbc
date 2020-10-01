@@ -15,7 +15,7 @@ public class Program {
 
         Department dp = new Department(2, null);
 
-        List<Seller> list = sl.findByDepartment(dp);
+        List<Seller> list = sl.findAll();
 
         list.forEach(System.out::println);
 
