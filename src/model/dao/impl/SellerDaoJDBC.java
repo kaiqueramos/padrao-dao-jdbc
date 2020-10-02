@@ -61,7 +61,6 @@ public class SellerDaoJDBC implements SellerDao {
     @Override
     public void update(Seller obj) {
         PreparedStatement st = null;
-        ResultSet rs = null;
         try{
             st = conn.prepareStatement(
                     "UPDATE seller " +
@@ -76,7 +75,6 @@ public class SellerDaoJDBC implements SellerDao {
             st.setInt(6, obj.getId());
 
             int rowsAffected = st.executeUpdate();
-            rs = st.getGeneratedKeys();
             if(rowsAffected > 0){
                 System.out.println("Id do vendedor modificado: " + obj.getId());
             }else{
@@ -85,14 +83,29 @@ public class SellerDaoJDBC implements SellerDao {
         }catch (SQLException e){
             throw new DbException(e.getMessage());
         }finally {
-            DB.closeResultSet(rs);
             DB.closeStatement(st);
         }
     }
 
     @Override
     public void deleteById(Integer id) {
-
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "DELETE FROM seller " +
+                            "WHERE Id = ?", Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1, id);
+            int rows = st.executeUpdate();
+            if(rows > 0){
+                System.out.println("O vendedor com o id " + id + " foi deletado.");
+            }else{
+                throw new DbException("Erro! Nenhum registro foi alterado.");
+            }
+        }catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

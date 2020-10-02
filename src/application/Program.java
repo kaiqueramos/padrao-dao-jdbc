@@ -13,13 +13,8 @@ public class Program {
     public static void main(String[] args) {
         SellerDao sl = DaoFactory.createSellerDao();
 
-        Seller sel1 = sl.findById(9);
-
-        sel1.setName("Teste Testado");
-
-        System.out.println(sel1);
-
-        sl.update(sel1);
+        sl.deleteById(9);
+    
         /*Department dp = new Department(2, null);
         Seller sel = new Seller();
         sel.setName("Jhon Yellow");
