@@ -1,6 +1,7 @@
 package application;
 
 import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
 import model.dao.SellerDao;
 import model.dao.impl.SellerDaoJDBC;
 import model.entities.Department;
@@ -12,17 +13,13 @@ import java.util.List;
 public class Program {
     public static void main(String[] args) {
         SellerDao sl = DaoFactory.createSellerDao();
+        DepartmentDao dp = DaoFactory.createDepartmentDao();
 
-        sl.deleteById(9);
-    
-        /*Department dp = new Department(2, null);
-        Seller sel = new Seller();
-        sel.setName("Jhon Yellow");
-        sel.setEmail("jhonyell@gmail.com");
-        sel.setBirthDate(new Date());
-        sel.setBaseSalary(4400.00);
-        sel.setDepartment(dp);
+        Department dep = new Department();
+        dep.setName("Foods and grocery");
+        dep.setId(10);
 
-        sl.insert(sel);*/
+        List<Department> list = dp.findAll();
+        list.forEach(System.out::println);
     }
 }
